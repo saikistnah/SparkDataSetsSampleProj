@@ -4,6 +4,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
 
@@ -18,12 +19,12 @@ public class SqlDataSet {
 		SparkSession sparkSession = new SparkSession(sparkContext);
 		SQLContext sQLContext = new SQLContext(sparkSession);
 		
-		//Dataset<User> ds = sQLContext.read().json("/Users/user/Documents/PersonalPOCs/SparkDataSetsSample/src/test/resources/testTable.json").as(Encoders.bean(User.class));
+		Dataset<User> ds = sQLContext.read().json("/Users/user/Documents/PersonalPOCs/SparkDataSetsSample/src/test/resources/testTable.json").as(Encoders.bean(User.class));
 		
 		Dataset<User> ds1 = sQLContext.read().json("/Users/user/Documents/PersonalPOCs/SparkDataSetsSample/src/test/resources/test.json").as(Encoders.bean(User.class));
-		//ds.join(ds1).show();
+		ds.join(ds1).show();
 		ds1.groupBy("name").count().show();
-
+		
 	}
 
 }
